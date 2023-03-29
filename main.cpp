@@ -291,15 +291,17 @@ void testArray()
         operationTime = double(stop - start) / CLOCKS_PER_SEC;
         printf("1  ; %8d ; array_append  ; %.3f \n", number, operationTime * 1000);
 
+        printf("%s\n\n", array.toString().c_str());
 
         // Pomiar usuwania z końca tablicy
-        array.restart();
         start = clock();
         for (int i = 0; i < number; i++)
         {
             array.pop();
         }
+
         stop = clock();
+
         operationTime = double(stop - start) / CLOCKS_PER_SEC;
         printf("2  ; %8d ; array_pop     ; %.3f \n", number, operationTime * 1000);
 
@@ -316,7 +318,6 @@ void testArray()
 
 
         // Pomiar usuwania z początku tablicy
-        array.restart();
         start = clock();
         for (int i = 0; i < number; i++)
         {

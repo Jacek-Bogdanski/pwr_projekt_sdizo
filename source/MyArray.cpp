@@ -25,6 +25,7 @@ public:
         }
         tmp[this->length] = n;
         this->length++;
+
         delete this->array;
         this->array = tmp;
     }
@@ -49,12 +50,12 @@ public:
             this->append(n);
             return;
         }
-        if (index == 0)
+        if (index <= 0)
         {
             this->prepend(n);
             return;
         }
-        // indeks zawiera się w tablicy
+        // indeks zawiera  się w tablicy
         int *tmp = new int[this->length + 1];
         int offset = 0;
         for (int i = 0; i <= this->length; i++)
@@ -81,6 +82,9 @@ public:
      */
     void pop()
     {
+        if(this->length==0){
+            return;
+        }
         int *tmp = new int[this->length - 1];
         for (int i = 0; i < this->length - 1; i++)
         {
@@ -98,6 +102,9 @@ public:
      */
     void shift()
     {
+        if(this->length==0){
+            return;
+        }
         int *tmp = new int[this->length - 1];
         for (int i = 0; i < this->length - 1; i++)
         {
@@ -110,6 +117,9 @@ public:
 
     void remove(int index)
     {
+        if(this->length==0){
+            return;
+        }
         if (index >= this->length)
         {
             this->pop();
