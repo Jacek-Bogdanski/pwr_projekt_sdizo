@@ -1,3 +1,0 @@
-/Users/jacekbogdanski/CLionProjects/pwr_projekt_sdizo/cmake-build-debug/CMakeFiles/sdizo.dir
-/Users/jacekbogdanski/CLionProjects/pwr_projekt_sdizo/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/jacekbogdanski/CLionProjects/pwr_projekt_sdizo/cmake-build-debug/CMakeFiles/rebuild_cache.dir

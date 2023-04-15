@@ -1,7 +1,0 @@
-TEST
-
-PWR
-
-INPUT
-
-END
