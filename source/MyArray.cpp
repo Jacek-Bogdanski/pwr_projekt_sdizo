@@ -130,7 +130,8 @@ public:
             this->shift();
             return;
         }
-        // indeks zawiera się w tablicy
+
+        // indeks zawiera się w tablicy
         int *tmp = new int[this->length - 1];
         int offset = 0;
         for (int i = 0; i < this->length; i++)

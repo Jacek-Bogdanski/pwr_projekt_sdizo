@@ -177,6 +177,30 @@ source/MyArray.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sdizo.dir/build.make CMakeFiles/sdizo.dir/source/MyArray.cpp.s
 .PHONY : source/MyArray.cpp.s
 
+source/MyList.o: source/MyList.cpp.o
+.PHONY : source/MyList.o
+
+# target to build an object file
+source/MyList.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sdizo.dir/build.make CMakeFiles/sdizo.dir/source/MyList.cpp.o
+.PHONY : source/MyList.cpp.o
+
+source/MyList.i: source/MyList.cpp.i
+.PHONY : source/MyList.i
+
+# target to preprocess a source file
+source/MyList.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sdizo.dir/build.make CMakeFiles/sdizo.dir/source/MyList.cpp.i
+.PHONY : source/MyList.cpp.i
+
+source/MyList.s: source/MyList.cpp.s
+.PHONY : source/MyList.s
+
+# target to generate assembly for a file
+source/MyList.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sdizo.dir/build.make CMakeFiles/sdizo.dir/source/MyList.cpp.s
+.PHONY : source/MyList.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -192,6 +216,9 @@ help:
 	@echo "... source/MyArray.o"
 	@echo "... source/MyArray.i"
 	@echo "... source/MyArray.s"
+	@echo "... source/MyList.o"
+	@echo "... source/MyList.i"
+	@echo "... source/MyList.s"
 .PHONY : help
 
 

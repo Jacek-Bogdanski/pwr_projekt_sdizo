@@ -1,9 +1,10 @@
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <iostream>
 #include <iomanip>
 #include <ctime>
 #include "source/MyArray.cpp"
+#include "source/MyList.cpp"
 
 using namespace std;
 
@@ -227,9 +228,64 @@ void handleArray()
         }
     }
 };
-void handleList(){
 
+void handleList()
+{
+    MyList list;
+    int input;
+    int value;
+    int index;
+
+    while (true)
+    {
+        printf("%s", "\n\n\n\n\n# Lista\n\n");
+        printf("%s\n\n", list.toString().c_str());
+        // pokazanie menu listy
+        printf("%s", menu_array);
+
+        scanf("%d", &input);
+        fflush(stdin);
+
+        switch (input)
+        {
+            case 0:
+                list.destroy();
+                return;
+            case 1:
+                printf("%s", "\nPodaj wartosc: ");
+                scanf("%d", &value);
+                fflush(stdin);
+                list.prepend(value);
+                break;
+            case 2:
+                printf("%s", "\nPodaj wartosc: ");
+                scanf("%d", &value);
+                fflush(stdin);
+                list.append(value);
+                break;
+            case 3:
+                printf("%s", "\nPodaj wartosc i indeks: ");
+                scanf("%d", &value);
+                scanf("%d", &index);
+                fflush(stdin);
+                list.put(value, index);
+                break;
+            case 4:
+                list.shift();
+                break;
+            case 5:
+                list.pop();
+                break;
+            case 6:
+                printf("%s", "\nPodaj indeks: ");
+                scanf("%d", &index);
+                fflush(stdin);
+                list.remove(index);
+                break;
+        }
+    }
 };
+
 void handleHeap(){
 
 };

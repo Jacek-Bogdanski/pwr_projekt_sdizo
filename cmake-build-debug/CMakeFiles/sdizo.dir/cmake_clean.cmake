@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/sdizo.dir/main.cpp.o.d"
   "CMakeFiles/sdizo.dir/source/MyArray.cpp.o"
   "CMakeFiles/sdizo.dir/source/MyArray.cpp.o.d"
+  "CMakeFiles/sdizo.dir/source/MyList.cpp.o"
+  "CMakeFiles/sdizo.dir/source/MyList.cpp.o.d"
   "sdizo"
   "sdizo.pdb"
 )

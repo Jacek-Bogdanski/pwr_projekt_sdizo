@@ -86,6 +86,9 @@
 		<Unit filename="/Users/jacekbogdanski/CLionProjects/pwr_projekt_sdizo/source/MyArray.cpp">
 			<Option target="sdizo"/>
 		</Unit>
+		<Unit filename="/Users/jacekbogdanski/CLionProjects/pwr_projekt_sdizo/source/MyList.cpp">
+			<Option target="sdizo"/>
+		</Unit>
 		<Unit filename="/Users/jacekbogdanski/CLionProjects/pwr_projekt_sdizo/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
