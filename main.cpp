@@ -1,10 +1,9 @@
 #include <cstdio>
-#include <string>
-#include <iostream>
-#include <iomanip>
 #include <ctime>
+#include <algorithm>
 #include "source/MyArray.cpp"
 #include "source/MyList.cpp"
+#include "source/MyHeap.cpp"
 
 using namespace std;
 
@@ -26,6 +25,7 @@ void testRedBlackTree();
 char menu_1[] = "\n\n\n\n\n### Projekt SDiZO, PWR 2023 ###\n### Autor:  Jacek Bogdański ###\n\n# MENU PROGRAMU:\n#   1. Tablica\n#   2. Lista\n#   3. Kopiec binarny\n#   4. Drzewo czerwono-czarne\n#   0. Koniec\n\nWybierz z listy: ";
 char menu_2[] = "# CZYNNOSC:\n#   1. Sprawdzenie struktury\n#   2. Pomiar czasu\n#   0. Powrot\n\nWybierz z listy: ";
 char menu_array[] = "# OPERACJE:\n#   1. Dodaj na poczatku\n#   2. Dodaj na koncu\n#   3. Dodaj na dowolnej pozycji\n#   4. Usuń z poczatku\n#   5. Usuń z konca\n#   6. Usuń z dowolnej pozycji\n#   0. Powrot\n\nWybierz z listy: ";
+char menu_heap[] = "# OPERACJE:\n#   1. Dodaj\n#   2. Usun korzen\n#   0. Powrot\n\nWybierz z listy: ";
 
 int main()
 {
@@ -287,7 +287,38 @@ void handleList()
 };
 
 void handleHeap(){
+    MyHeap heap;
+    int input;
+    int value;
+    int index;
 
+    while (true)
+    {
+        printf("%s", "\n\n\n\n\n# Kopiec binarny\n\n");
+        heap.printHeap();
+
+        // pokazanie menu kopca
+        printf("%s", menu_heap);
+
+        scanf("%d", &input);
+        fflush(stdin);
+
+        switch (input)
+        {
+            case 0:
+                heap.destroy();
+                return;
+            case 1:
+                printf("%s", "\nPodaj wartosc: ");
+                scanf("%d", &value);
+                fflush(stdin);
+                heap.add(value);
+                break;
+            case 2:
+                heap.removeRoot();
+                break;
+        }
+    }
 };
 void handleRedBlackTree(){
 
