@@ -5,8 +5,8 @@ using namespace std;
 
 struct ListElement{
     int number;
-    ListElement *next;
-    ListElement *prev;
+    ListElement *next = nullptr;
+    ListElement *prev = nullptr;
 };
 
 class MyList
@@ -15,6 +15,7 @@ private:
     int length;
 
     ListElement *head=nullptr;
+    ListElement *tail=nullptr;
 
 public:
     int getLength()
@@ -32,16 +33,14 @@ public:
         newElement->number = n;
         if(this->head==nullptr){
             this->head = newElement;
+            this->tail = newElement;
             return;
         }
 
-        ListElement *last = this->head;
-        while (last->next != nullptr){
-            last = last->next;
-        }
 
-        newElement->prev = last;
-        last->next = newElement;
+        newElement->prev = this->tail;
+        this->tail->next = newElement;
+        this->tail = newElement;
 
         this->length++;
     }
@@ -56,6 +55,7 @@ public:
         newElement->number = n;
         if(this->head==nullptr){
             this->head = newElement;
+            this->tail = newElement;
             return;
         }
 
@@ -83,6 +83,7 @@ public:
         newElement->number = n;
         if(this->head==nullptr){
             this->head = newElement;
+            this->tail = newElement;
             return;
         }
 
@@ -113,19 +114,18 @@ public:
             return;
         }
 
+        // usunięcie jedynego elementu
         if(this->head->next == nullptr){
             delete this->head;
             this->head = nullptr;
+            this->tail = nullptr;
             return;
         }
 
-        ListElement *last = this->head;
-        while (last->next != nullptr){
-            last = last->next;
-        }
-
-        last->prev->next = nullptr;
-        delete last;
+        ListElement *prev = this->tail->prev;
+        prev->next = nullptr;
+        delete this->tail;
+        this->tail = prev;
     }
 
     /**
@@ -141,6 +141,7 @@ public:
         if(this->head->next == nullptr){
             delete this->head;
             this->head = nullptr;
+            this->tail = nullptr;
             return;
         }
 
@@ -156,7 +157,7 @@ public:
             return;
         }
 
-        if (index >= this->length)
+        if (index >= this->length-1)
         {
             this->pop();
             return;
@@ -170,6 +171,7 @@ public:
         if(this->head->next == nullptr){
             delete this->head;
             this->head = nullptr;
+            this->tail = nullptr;
             return;
         }
 
@@ -197,6 +199,23 @@ public:
         } while (last != nullptr);
 
         this->head = nullptr;
+        this->tail = nullptr;
+    }
+
+    int search(int n){
+        if(this->head == nullptr){
+            return -1;
+        }
+        int i=0;
+        ListElement *last = this->head;
+        while(last != nullptr){
+            if(last->number == n){
+                return i;
+            }
+            last = last->next;
+            i++;
+        }
+        return -1;
     }
 
     void restart()
@@ -206,7 +225,7 @@ public:
 
     string toString()
     {
-        string output = "[ ";
+        string output = "FRONT [ ";
         ListElement *last = this->head;
 
         while (last != nullptr) {
@@ -221,12 +240,42 @@ public:
         }
         output.pop_back();
 
-        output.append(" ]");
+        output.append(" ]\n");
+
+        output.append("BACK  [ ");
+        last = this->tail;
+
+        while (last != nullptr) {
+            output.append(to_string(last->number));
+            output.append(", ");
+            last = last->prev;
+        }
+
+        if (this->tail != nullptr)
+        {
+            output.pop_back();
+        }
+        output.pop_back();
+
+        output.append(" ]\n");
+
         return output;
     }
 
     MyList(){
         this->length = 0;
         this->head = nullptr;
+        this->tail = nullptr;
+    };
+
+    MyList(int *data, int length){
+        if(length==0){
+            this->length = 0;
+            this->head = nullptr;
+            this->tail = nullptr;
+        }
+        for(int i=0;i<length;i++){
+            this->append(data[i]);
+        }
     };
 };

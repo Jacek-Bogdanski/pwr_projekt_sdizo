@@ -10,7 +10,7 @@
 using namespace std;
 
 
-// źródło: stackoverflow.com
+// wyświetlanie kopca, źródło: stackoverflow.com
 static string do_padding (unsigned index, unsigned mlength){
     string padding;
     if (int((index-1)/2) != 0){
@@ -21,7 +21,7 @@ static string do_padding (unsigned index, unsigned mlength){
     return padding;
 }
 
-// źródło: stackoverflow.com
+// wyświetlanie kopca, źródło: stackoverflow.com
 static void printer (vector<int> const & tree, unsigned index, unsigned mlength){
     auto last = tree.size() - 1 ;
     auto  left = 2 * index + 1 ;
@@ -41,7 +41,7 @@ static void printer (vector<int> const & tree, unsigned index, unsigned mlength)
     }
 }
 
-// źródło: stackoverflow.com
+// wyświetlanie kopca, źródło: stackoverflow.com
 static void print_tree (vector<int> & tree){
     unsigned mlength = 0;
     for (int & element : tree){
@@ -171,6 +171,29 @@ public:
         }
     }
 
+    int search(int n, int index=0){
+        int result = -1;
+        if(this->array[index]<n){
+            return result;
+        }
+
+        if(this->array[index]==n){
+            return index;
+        }
+
+        int leftChild = 2*index+1;
+        int rightChild = 2*index+2;
+
+        if(leftChild < this->length && (result = this->search(n,leftChild)) != -1){
+            return result;
+        }
+        if(rightChild < this->length && (result = this->search(n,rightChild)) != -1){
+            return result;
+        }
+
+        return result;
+    }
+
     void destroy()
     {
         delete this->array;
@@ -202,5 +225,16 @@ public:
     MyHeap(){
         this->length = 0;
         this->array = nullptr;
+    };
+
+    MyHeap(int *data, int length){
+        this->length = 0;
+        this->array = nullptr;
+        if(length==0){
+            return;
+        }
+        for(int i=0;i<length;i++){
+            this->add(data[i]);
+        }
     };
 };

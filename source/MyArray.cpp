@@ -115,6 +115,10 @@ public:
         this->array = tmp;
     }
 
+    /**
+     * Funkcja usuwajaca element z podanego indeksu
+     * @param index
+     */
     void remove(int index)
     {
         if(this->length==0){
@@ -148,6 +152,15 @@ public:
         delete this->array;
         this->length--;
         this->array = tmp;
+    }
+
+    int search(int n){
+        for(int i=0;i<this->length;i++){
+            if(this->array[i] == n){
+                return i;
+            }
+        }
+        return -1;
     }
 
     void destroy()
@@ -185,5 +198,18 @@ public:
     MyArray(){
         this->length = 0;
         this->array = nullptr;
+    };
+
+    MyArray(int *data, int length){
+        if(length==0){
+            this->length = 0;
+            this->array = nullptr;
+        }
+
+        this->length = length;
+        this->array = new int[length];
+        for(int i=0;i<length;i++){
+            this->array[i] = data[i];
+        }
     };
 };
