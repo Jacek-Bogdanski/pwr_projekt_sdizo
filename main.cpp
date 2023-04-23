@@ -3,6 +3,10 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <stdlib.h>
+#include <conio.h>
+#include <iomanip>
+#include <Windows.h>
 #include "source/MyArray.cpp"
 #include "source/MyList.cpp"
 #include "source/MyHeap.cpp"
@@ -31,7 +35,18 @@ bool fileExists(std::string filename){
     return false;
 }
 
-char menu_header[] = "\n\n\n\n\n### Projekt SDiZO, PWR 2023 ###\n### Autor:  Jacek Bogdański ###\n\n";
+//-------------------------------------------------------------------------
+long long int read_QPC()
+{
+    LARGE_INTEGER count;
+    QueryPerformanceCounter(&count);
+    return((long long int)count.QuadPart);
+}
+//-------------------------------------------------------------------------
+
+long long int frequency, start, elapsed;
+
+char menu_header[] = "\n### Projekt SDiZO, PWR 2023 ###\n### Autor:  Jacek Bogdański ###\n\n";
 char menu_1[] = "# MENU PROGRAMU:\n#   1. Tablica\n#   2. Lista\n#   3. Kopiec binarny\n#   4. Drzewo BST\n#   9. Dane wejściowe\n#   0. Koniec\n\nWybierz z listy: ";
 char menu_array[] = "# OPERACJE:\n#   1. Dodaj na poczatku\n#   2. Dodaj na koncu\n#   3. Dodaj na dowolnej pozycji\n#   4. Usuń z poczatku\n#   5. Usuń z końca\n#   6. Usuń z dowolnej pozycji\n#   7. Szukaj\n#   0. Powrot\n\nWybierz z listy: ";
 char menu_heap[] = "# OPERACJE:\n#   1. Dodaj\n#   2. Usun korzen\n#   3. Wyszukaj\n#   0. Powrot\n\nWybierz z listy: ";
@@ -89,10 +104,13 @@ int main()
     // 4. drzewo czerwono-czarne
     // 0. exit
 
+    SetConsoleOutputCP(CP_UTF8);
+
     int input;
 
     while (true)
     {
+        system("cls");
         printf("%s", menu_header);
 
         printf("Plik: %s\n", file_name.c_str());
@@ -135,7 +153,8 @@ void menuData()
 {
     while (true)
     {
-        printf("%s", "\n\n\n\n\n# Dane wejściowe\n\n");
+        system("cls");
+        printf("%s", "\n# Dane wejściowe\n\n");
         printf("Plik: %s\n", file_name.c_str());
         printf("Rozmiar wczytanych danych: %d\n\n", test_data_size);
         // pokazanie menu danych wejsciowych
@@ -189,7 +208,7 @@ void menuData()
                 file << n << "\n";
 
                 for(int i=0;i<n;i++){
-                    file << rand() << "\n";
+                    file << (rand()*rand()) % INT_MAX << "\n";
                 }
 
                 file.close();
@@ -208,10 +227,12 @@ void handleArray()
     int input;
     int value;
     int index;
+    QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
 
     while (true)
     {
-        printf("%s", "\n\n\n\n\n# Tablica\n\n");
+        system("cls");
+        printf("%s", "\n# Tablica\n\n");
         printf("%s\n\n", array.toString().c_str());
         // pokazanie menu tablicy
         printf("%s", menu_array);
@@ -229,24 +250,26 @@ void handleArray()
                 scanf("%d", &value);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 array.prepend(value);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 2:
                 printf("%s", "\nPodaj wartosc: ");
                 scanf("%d", &value);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 array.append(value);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 3:
                 printf("%s", "\nPodaj wartosc i indeks: ");
@@ -254,40 +277,44 @@ void handleArray()
                 scanf("%d", &index);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 array.put(value, index);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 4:
-                start_time = clock();
+                start = read_QPC();
                 array.shift();
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 5:
-                start_time = clock();
+                start = read_QPC();
                 array.pop();
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 6:
                 printf("%s", "\nPodaj indeks: ");
                 scanf("%d", &index);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 array.remove(index);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
 
             case 7:
@@ -295,20 +322,20 @@ void handleArray()
                 scanf("%d", &value);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 index = array.search(value);
-                stop_time = clock();
-
+                elapsed = read_QPC() - start;
 
                 if(index==-1){
-                    printf("%s", "\nNie odnaleziono.");
+                    printf("%s\n", "\nNie odnaleziono.");
                 }
                 else{
-                    printf("%s %d", "\nOdnaleziono pod indeksem:",index);
+                    printf("%s %d\n", "\nOdnaleziono pod indeksem:",index);
                 }
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
 
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
         }
     }
@@ -320,10 +347,12 @@ void handleList()
     int input;
     int value;
     int index;
+    QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
 
     while (true)
     {
-        printf("%s", "\n\n\n\n\n# Lista\n\n");
+        system("cls");
+        printf("%s", "\n# Lista\n\n");
         printf("%s\n", list.toString().c_str());
         // pokazanie menu listy
         printf("%s", menu_array);
@@ -341,24 +370,26 @@ void handleList()
                 scanf("%d", &value);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 list.prepend(value);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 2:
                 printf("%s", "\nPodaj wartosc: ");
                 scanf("%d", &value);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 list.append(value);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 3:
                 printf("%s", "\nPodaj wartosc i indeks: ");
@@ -366,54 +397,64 @@ void handleList()
                 scanf("%d", &index);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 list.put(value, index);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 4:
-                start_time = clock();
+                start = read_QPC();
                 list.shift();
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 5:
-                start_time = clock();
+                start = read_QPC();
                 list.pop();
+                elapsed = read_QPC() - start;
+
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 6:
                 printf("%s", "\nPodaj indeks: ");
                 scanf("%d", &index);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 list.remove(index);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 7:
                 printf("%s", "\nPodaj liczbę: ");
                 scanf("%d", &value);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 index = list.search(value);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
                 if(index==-1){
-                    printf("%s", "\nNie odnaleziono.");
+                    printf("%s\n", "\nNie odnaleziono.");
                 }
                 else{
-                    printf("%s %d", "\nOdnaleziono pod indeksem:",index);
+                    printf("%s %d\n", "\nOdnaleziono pod indeksem:",index);
                 }
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
         }
     }
@@ -424,10 +465,12 @@ void handleHeap(){
     int input;
     int value;
     int index;
+    QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
 
     while (true)
     {
-        printf("%s", "\n\n\n\n\n# Kopiec binarny\n");
+        system("cls");
+        printf("%s", "\n# Kopiec binarny\n");
         heap.printHeap();
 
         // pokazanie menu kopca
@@ -446,39 +489,42 @@ void handleHeap(){
                 scanf("%d", &value);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 heap.add(value);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 2:
-                start_time = clock();
+                start = read_QPC();
                 heap.removeRoot();
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 3:
                 printf("%s", "\nPodaj liczbę: ");
                 scanf("%d", &value);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 index = heap.search(value);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
                 if(index==-1){
-                    printf("%s", "\nNie odnaleziono.");
+                    printf("%s\n", "\nNie odnaleziono.");
                 }
                 else{
-                    printf("%s %d", "\nOdnaleziono pod indeksem:",index);
+                    printf("%s %d\n", "\nOdnaleziono pod indeksem:",index);
                 }
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
         }
     }
@@ -489,10 +535,12 @@ void handleBST(){
     int input;
     int value;
     int index;
+    QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
 
     while (true)
     {
-        printf("%s", "\n\n\n\n\n# Drzewo BST\n");
+        system("cls");
+        printf("%s", "\n# Drzewo BST\n");
         bst.printBST();
 
         // pokazanie menu kopca
@@ -511,169 +559,67 @@ void handleBST(){
                 scanf("%d", &value);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 bst.add(value);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 2:
                 printf("%s", "\nPodaj wartosc: ");
                 scanf("%d", &value);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 bst.remove(value);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 3:
                 printf("%s", "\nPodaj liczbę: ");
                 scanf("%d", &value);
                 fflush(stdin);
 
-                start_time = clock();
+                start = read_QPC();
                 index = bst.search(value);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
                 if(index==-1){
-                    printf("%s", "\nNie odnaleziono.");
+                    printf("%s\n", "\nNie odnaleziono.");
                 }
                 else{
-                    printf("%s", "\nOdnaleziono.");
+                    printf("%s\n", "\nOdnaleziono.");
                 }
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
             case 4:
                 printf("%s", "\nPodaj liczbę: ");
                 scanf("%d", &value);
                 fflush(stdin);
+
+                start = read_QPC();
                 index = bst.remove(value);
-                stop_time = clock();
+                elapsed = read_QPC() - start;
 
                 if(index==-1){
-                    printf("%s", "\nNie usunięto.");
+                    printf("%s\n", "\nNie usunięto.");
                 }
                 else{
-                    printf("%s", "\nUsunięto.");
+                    printf("%s\n", "\nUsunięto.");
                 }
 
-                printf("\nCzas operacji: %.4f ms \n", double(stop_time*1000 - start_time*1000) / CLOCKS_PER_SEC);
-                getline(cin, input_s);
+                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                system("pause");
                 break;
         }
-    }
-};
-
-
-
-
-
-// Testy i pomiar czasu
-
-void testArray()
-{
-    MyArray array;
-    int number;
-    srand(time(0));
-    bool print = false;
-
-    // tablica z danymi testowymi, jej tworzenie i wypełnienie nie jest uwzględniane w pomiarze czasu
-    int *dataArray;
-
-    while (true)
-    {
-        printf("%s", "\n\n\n\n\n# Tablica\n\n");
-        if (print)
-        {
-            printf("%s\n\n", array.toString().c_str());
-        }
-        printf("%s", "Zostanie wykonana podana liczba powtorzen wszystkich operacji.\n");
-        printf("%s", "Podaj wartość niedodatnią, aby wrocić do menu.\n");
-
-        printf("%s", "\nPodaj liczbę operacji: ");
-        scanf("%d", &number);
-        fflush(stdin);
-        printf("\n\nNr ; Liczba   ; Identyfikator ; Czas [ms] \n");
-
-        if (number <= 0)
-        {
-            array.destroy();
-            return;
-        }
-
-        // przygotowanie danych testowych
-        dataArray = new int[number];
-        for (int i = 0; i < number; i++)
-        {
-            dataArray[i] = rand();
-        }
-        clock_t start;
-        clock_t stop;
-        double operationTime;
-
-        // Pomiar dodawania na końcu tablicy
-        array.restart();
-        start = clock();
-        for (int i = 0; i < number; i++)
-        {
-            array.append(dataArray[i]);
-        }
-        stop = clock();
-        operationTime = double(stop - start) / CLOCKS_PER_SEC;
-        printf("1  ; %8d ; array_append  ; %.3f \n", number, operationTime * 1000);
-
-        printf("%s\n\n", array.toString().c_str());
-
-        // Pomiar usuwania z końca tablicy
-        start = clock();
-        for (int i = 0; i < number; i++)
-        {
-            array.pop();
-        }
-
-        stop = clock();
-
-        operationTime = double(stop - start) / CLOCKS_PER_SEC;
-        printf("2  ; %8d ; array_pop     ; %.3f \n", number, operationTime * 1000);
-
-        // Pomiar dodawania na początku tablicy
-        array.restart();
-        start = clock();
-        for (int i = 0; i < number; i++)
-        {
-            array.prepend(dataArray[i]);
-        }
-        stop = clock();
-        operationTime = double(stop - start) / CLOCKS_PER_SEC;
-        printf("3  ; %8d ; array_prepend ; %.3f \n", number, operationTime * 1000);
-
-
-        // Pomiar usuwania z początku tablicy
-        start = clock();
-        for (int i = 0; i < number; i++)
-        {
-            array.shift();
-        }
-        stop = clock();
-        operationTime = double(stop - start) / CLOCKS_PER_SEC;
-        printf("4  ; %8d ; array_shift   ; %.3f \n", number, operationTime * 1000);
-
-
-        // Pomiar dodawania na losowym miejscu w tablicy
-        array.restart();
-        start = clock();
-        for (int i = 0; i < number; i++)
-        {
-            array.put(dataArray[i], (int)i/2);
-        }
-        stop = clock();
-        operationTime = double(stop - start) / CLOCKS_PER_SEC;
-        printf("5  ; %8d ; array_put     ; %.3f \n", number, operationTime * 1000);
     }
 };

@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.24)
 project(pwr_projekt_sdizo)
 
-set(CMAKE_CXX_STANDARD 17)
+#Set Linker flags
+set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 
-# copy input file to
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/input.txt
-        DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+set(CMAKE_CXX_STANDARD 11)
 
-add_executable(sdizo main.cpp source/MyArray.cpp source/MyList.cpp source/MyHeap.cpp)
+
+add_executable(sdizo main.cpp source/MyArray.cpp source/MyList.cpp source/MyHeap.cpp source/MyBST.cpp)
