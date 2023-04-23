@@ -14,102 +14,97 @@
 
 using namespace std;
 
-void menuData();
-
+// funkcje sterujące
+void handleData();
 void handleArray();
 void handleList();
 void handleHeap();
 void handleBST();
 
-clock_t start_time;
-clock_t stop_time;
-double operation_time;
-string input_s;
+// Zmienne wykorzystywane w całym programie
+long long int frequency, start, elapsed;
+string file_name = "input.txt";
+int *test_data = nullptr;
+int test_data_size = 0;
+int val = 0;
 
-bool fileExists(std::string filename){
+/**
+ * Sprawdzenie, czy plik istnieje
+ */
+bool fileExists(std::string filename) {
     std::ifstream file(filename.c_str());
-
     if (file) {
         return true;
     }
     return false;
 }
 
+/**
+ * Pobranie czasu systemowego, źródło: antoni.sterna.staff.iiar.pwr.edu.pl
+ */
 //-------------------------------------------------------------------------
-long long int read_QPC()
-{
+long long int read_QPC() {
     LARGE_INTEGER count;
     QueryPerformanceCounter(&count);
-    return((long long int)count.QuadPart);
+    return ((long long int) count.QuadPart);
 }
 //-------------------------------------------------------------------------
 
-long long int frequency, start, elapsed;
+char menu_header[] = "\n### Projekt SDiZO, PWR 2023 ###    \n### Autor:  Jacek Bogdański ###\n\n";
+char menu_1[] = "# MENU PROGRAMU:\n#   1. Tablica          \n#   2. Lista          \n#   3. Kopiec binarny           \n#   4. Drzewo BST     \n#   9. Dane wejściowe\n#   0. Koniec                 \n\nWybierz z listy: ";
+char menu_array[] = "# OPERACJE: \n#   1. Dodaj na poczatku\n#   2. Dodaj na koncu \n#   3. Dodaj na dowolnej pozycji\n#   4. Usuń z poczatku\n#   5. Usuń z końca  \n#   6. Usuń z dowolnej pozycji\n#   7. Szukaj\n#   0. Powrot\n\nWybierz z listy: ";
+char menu_heap[] = "# OPERACJE:  \n#   1. Dodaj element    \n#   2. Usun korzen    \n#   3. Wyszukaj element         \n#   0. Powrot         \n\nWybierz z listy: ";
+char menu_bst[] = "\n# OPERACJE: \n#   1. Dodaj element    \n#   2. Szukaj elementu\n#   3. Usuń element             \n#   0. Powrot         \n\nWybierz z listy: ";
+char menu_data[] = "# OPERACJE:  \n#   1. Wybierz plik     \n#   2. Wygeneruj plik \n#   3. Wczytaj dane z pliku     \n#   4. Wyczyść dane   \n#   0. Powrot        \n\nWybierz z listy: ";
 
-char menu_header[] = "\n### Projekt SDiZO, PWR 2023 ###\n### Autor:  Jacek Bogdański ###\n\n";
-char menu_1[] = "# MENU PROGRAMU:\n#   1. Tablica\n#   2. Lista\n#   3. Kopiec binarny\n#   4. Drzewo BST\n#   9. Dane wejściowe\n#   0. Koniec\n\nWybierz z listy: ";
-char menu_array[] = "# OPERACJE:\n#   1. Dodaj na poczatku\n#   2. Dodaj na koncu\n#   3. Dodaj na dowolnej pozycji\n#   4. Usuń z poczatku\n#   5. Usuń z końca\n#   6. Usuń z dowolnej pozycji\n#   7. Szukaj\n#   0. Powrot\n\nWybierz z listy: ";
-char menu_heap[] = "# OPERACJE:\n#   1. Dodaj\n#   2. Usun korzen\n#   3. Wyszukaj\n#   0. Powrot\n\nWybierz z listy: ";
-char menu_bst[] = "\n# OPERACJE:\n#   1. Dodaj\n#   2. Usun \n#   3. Szukaj \n#   4. Usuń element \n#   0. Powrot\n\nWybierz z listy: ";
-char menu_data[] = "# OPERACJE:\n#   1. Wybierz plik\n#   2. Wygeneruj plik \n#   3. Wczytaj dane z wybranego pliku \n#   4. Wyczyść załadowane dane \n#   0. Powrot\n\nWybierz z listy: ";
-
-string file_name = "input.txt";
-
-int *test_data = nullptr;
-int test_data_size = 0;
-int val = 0;
-
-void readTestData(){
+/**
+ * Ładowanie danych z pliku do tablicy test_data
+ */
+void readTestData() {
     std::ifstream file(file_name.c_str());
-    test_data_size=0;
-    if(file.is_open())
-    {
+    test_data_size = 0;
+    if (file.is_open()) {
         file >> test_data_size;
-        if(file.fail())
-        {
+        if (file.fail()) {
             cout << "Błąd odczytu danych" << endl;
-            test_data_size=0;
-        }
-        else{
+            test_data_size = 0;
+        } else {
             test_data = new int[test_data_size];
-            for(int i = 0; i < test_data_size; i++)
-            {
+            for (int i = 0; i < test_data_size; i++) {
                 file >> val;
-                if(file.fail())
-                {
+                if (file.fail()) {
                     cout << "Błąd odczytu danych" << endl;
                     break;
-                }
-                else
-                {
+                } else {
                     test_data[i] = val;
                 }
             }
         }
         file.close();
-    }
-    else {
+    } else {
         cout << "File error - OPEN" << endl;
     }
 }
 
-int main()
-{
+/**
+ * Główna funkcja
+ * @return
+ */
+int main() {
     // Autor: Jacek Bogdański, 263895
 
     // Menu
     // 1. tablica
     // 2. lista
     // 3. kopiec binarny
-    // 4. drzewo czerwono-czarne
+    // 4. drzewo BST
     // 0. exit
 
     SetConsoleOutputCP(CP_UTF8);
-
     int input;
 
-    while (true)
-    {
+    // pętla menu głównego
+    while (true) {
         system("cls");
         printf("%s", menu_header);
 
@@ -123,25 +118,29 @@ int main()
         scanf("%d", &input);
         fflush(stdin);
 
-        switch (input)
-        {
+        switch (input) {
             case 0:
                 printf("%s", "\nProgram zakonczony.\n");
                 return 0;
             case 1:
+                // tablica
                 handleArray();
                 break;
             case 2:
+                // lista
                 handleList();
                 break;
             case 3:
+                // kopiec
                 handleHeap();
                 break;
             case 4:
+                // drzewo bst
                 handleBST();
                 break;
             case 9:
-                menuData();
+                // wczytywanie, generowanie danych
+                handleData();
                 break;
         }
     }
@@ -149,10 +148,12 @@ int main()
     return 0;
 }
 
-void menuData()
-{
-    while (true)
-    {
+/**
+ *
+ */
+void handleData() {
+    // pętla menu
+    while (true) {
         system("cls");
         printf("%s", "\n# Dane wejściowe\n\n");
         printf("Plik: %s\n", file_name.c_str());
@@ -166,19 +167,18 @@ void menuData()
         char tmp[] = "";
         int n;
 
-        switch (input)
-        {
+        switch (input) {
             case 0:
                 return;
             case 1:
+                // ładowanie pliku o innej nazwie
                 printf("%s", "\nPodaj nazwę pliku: ");
                 scanf("%s", tmp);
                 fflush(stdin);
 
-                if(!fileExists(tmp)){
+                if (!fileExists(tmp)) {
                     printf("%s", "\nPlik nie istnieje!\n\n");
-                }
-                else{
+                } else {
                     file_name = tmp;
                     readTestData();
 
@@ -187,11 +187,13 @@ void menuData()
                 return;
 
             case 3:
+                // ładowanie danych z ustawionego pliku
                 readTestData();
                 printf("%s", "\nPlik został załadowany. \n\n");
                 return;
 
             case 4:
+                // czyszczenie zapamietanych danych
                 delete test_data;
                 test_data = nullptr;
                 test_data_size = 0;
@@ -199,16 +201,17 @@ void menuData()
                 return;
 
             case 2:
+                // generowanie danych
                 printf("%s", "\nPodaj ilość liczb: ");
                 scanf("%d", &n);
                 fflush(stdin);
 
                 ofstream file;
-                file.open (file_name);
+                file.open(file_name);
                 file << n << "\n";
 
-                for(int i=0;i<n;i++){
-                    file << (rand()*rand()) % INT_MAX << "\n";
+                for (int i = 0; i < n; i++) {
+                    file << (rand() * rand()) % INT_MAX << "\n";
                 }
 
                 file.close();
@@ -221,16 +224,15 @@ void menuData()
 
 // Sprawdzenie struktury
 
-void handleArray()
-{
-    MyArray array(test_data,test_data_size);
+void handleArray() {
+    MyArray array(test_data, test_data_size);
     int input;
     int value;
     int index;
-    QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
+    QueryPerformanceFrequency((LARGE_INTEGER * ) & frequency);
 
-    while (true)
-    {
+    // pętla menu
+    while (true) {
         system("cls");
         printf("%s", "\n# Tablica\n\n");
         printf("%s\n\n", array.toString().c_str());
@@ -240,12 +242,13 @@ void handleArray()
         scanf("%d", &input);
         fflush(stdin);
 
-        switch (input)
-        {
+        switch (input) {
             case 0:
                 array.destroy();
                 return;
+
             case 1:
+                // dodanie na poczatku
                 printf("%s", "\nPodaj wartosc: ");
                 scanf("%d", &value);
                 fflush(stdin);
@@ -258,7 +261,9 @@ void handleArray()
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
+
             case 2:
+                // dodanie na koncu
                 printf("%s", "\nPodaj wartosc: ");
                 scanf("%d", &value);
                 fflush(stdin);
@@ -271,7 +276,9 @@ void handleArray()
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
+
             case 3:
+                // dodanie na dowolnej pozycji
                 printf("%s", "\nPodaj wartosc i indeks: ");
                 scanf("%d", &value);
                 scanf("%d", &index);
@@ -285,7 +292,9 @@ void handleArray()
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
+
             case 4:
+                // usuniecie z poczatku
                 start = read_QPC();
                 array.shift();
                 elapsed = read_QPC() - start;
@@ -294,7 +303,9 @@ void handleArray()
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
+
             case 5:
+                // usuniecie z konca
                 start = read_QPC();
                 array.pop();
                 elapsed = read_QPC() - start;
@@ -303,7 +314,9 @@ void handleArray()
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
+
             case 6:
+                // usuniecie z dowolnej pozycji
                 printf("%s", "\nPodaj indeks: ");
                 scanf("%d", &index);
                 fflush(stdin);
@@ -318,6 +331,7 @@ void handleArray()
                 break;
 
             case 7:
+                // wyszukiwanie
                 printf("%s", "\nPodaj liczbę: ");
                 scanf("%d", &value);
                 fflush(stdin);
@@ -326,11 +340,10 @@ void handleArray()
                 index = array.search(value);
                 elapsed = read_QPC() - start;
 
-                if(index==-1){
+                if (index == -1) {
                     printf("%s\n", "\nNie odnaleziono.");
-                }
-                else{
-                    printf("%s %d\n", "\nOdnaleziono pod indeksem:",index);
+                } else {
+                    printf("%s %d\n", "\nOdnaleziono pod indeksem:", index);
                 }
 
                 cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
@@ -341,16 +354,15 @@ void handleArray()
     }
 };
 
-void handleList()
-{
-    MyList list(test_data,test_data_size);
+void handleList() {
+    MyList list(test_data, test_data_size);
     int input;
     int value;
     int index;
-    QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
+    QueryPerformanceFrequency((LARGE_INTEGER * ) & frequency);
 
-    while (true)
-    {
+    // pętla menu
+    while (true) {
         system("cls");
         printf("%s", "\n# Lista\n\n");
         printf("%s\n", list.toString().c_str());
@@ -360,12 +372,13 @@ void handleList()
         scanf("%d", &input);
         fflush(stdin);
 
-        switch (input)
-        {
+        switch (input) {
             case 0:
                 list.destroy();
                 return;
+
             case 1:
+                // dodanie na poczatku
                 printf("%s", "\nPodaj wartosc: ");
                 scanf("%d", &value);
                 fflush(stdin);
@@ -378,7 +391,9 @@ void handleList()
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
+
             case 2:
+                // dodanie na koncu
                 printf("%s", "\nPodaj wartosc: ");
                 scanf("%d", &value);
                 fflush(stdin);
@@ -391,7 +406,9 @@ void handleList()
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
+
             case 3:
+                // dodanie na dowolnej pozycji
                 printf("%s", "\nPodaj wartosc i indeks: ");
                 scanf("%d", &value);
                 scanf("%d", &index);
@@ -405,7 +422,9 @@ void handleList()
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
+
             case 4:
+                // usuniecie z poczatku
                 start = read_QPC();
                 list.shift();
                 elapsed = read_QPC() - start;
@@ -414,7 +433,9 @@ void handleList()
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
+
             case 5:
+                // usuniecie z konca
                 start = read_QPC();
                 list.pop();
                 elapsed = read_QPC() - start;
@@ -423,7 +444,9 @@ void handleList()
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
+
             case 6:
+                // usuniecie z dowolnej pozycji
                 printf("%s", "\nPodaj indeks: ");
                 scanf("%d", &index);
                 fflush(stdin);
@@ -436,7 +459,9 @@ void handleList()
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
+
             case 7:
+                // wyszukiwanie
                 printf("%s", "\nPodaj liczbę: ");
                 scanf("%d", &value);
                 fflush(stdin);
@@ -445,11 +470,10 @@ void handleList()
                 index = list.search(value);
                 elapsed = read_QPC() - start;
 
-                if(index==-1){
+                if (index == -1) {
                     printf("%s\n", "\nNie odnaleziono.");
-                }
-                else{
-                    printf("%s %d\n", "\nOdnaleziono pod indeksem:",index);
+                } else {
+                    printf("%s %d\n", "\nOdnaleziono pod indeksem:", index);
                 }
 
                 cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
@@ -460,15 +484,15 @@ void handleList()
     }
 };
 
-void handleHeap(){
-    MyHeap heap(test_data,test_data_size);
+void handleHeap() {
+    MyHeap heap(test_data, test_data_size);
     int input;
     int value;
     int index;
-    QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
+    QueryPerformanceFrequency((LARGE_INTEGER * ) & frequency);
 
-    while (true)
-    {
+    // pętla menu
+    while (true) {
         system("cls");
         printf("%s", "\n# Kopiec binarny\n");
         heap.printHeap();
@@ -479,12 +503,13 @@ void handleHeap(){
         scanf("%d", &input);
         fflush(stdin);
 
-        switch (input)
-        {
+        switch (input) {
             case 0:
                 heap.destroy();
                 return;
+
             case 1:
+                // dodanie elementu
                 printf("%s", "\nPodaj wartosc: ");
                 scanf("%d", &value);
                 fflush(stdin);
@@ -497,7 +522,9 @@ void handleHeap(){
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
+
             case 2:
+                // usuniecie korzenia
                 start = read_QPC();
                 heap.removeRoot();
                 elapsed = read_QPC() - start;
@@ -506,7 +533,9 @@ void handleHeap(){
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
+
             case 3:
+                // wyszukiwanie
                 printf("%s", "\nPodaj liczbę: ");
                 scanf("%d", &value);
                 fflush(stdin);
@@ -515,11 +544,10 @@ void handleHeap(){
                 index = heap.search(value);
                 elapsed = read_QPC() - start;
 
-                if(index==-1){
+                if (index == -1) {
                     printf("%s\n", "\nNie odnaleziono.");
-                }
-                else{
-                    printf("%s %d\n", "\nOdnaleziono pod indeksem:",index);
+                } else {
+                    printf("%s %d\n", "\nOdnaleziono pod indeksem:", index);
                 }
 
                 cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
@@ -530,15 +558,15 @@ void handleHeap(){
     }
 };
 
-void handleBST(){
-    MyBST bst(test_data,test_data_size);
+void handleBST() {
+    MyBST bst(test_data, test_data_size);
     int input;
     int value;
     int index;
-    QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
+    QueryPerformanceFrequency((LARGE_INTEGER * ) & frequency);
 
-    while (true)
-    {
+    // pętla menu
+    while (true) {
         system("cls");
         printf("%s", "\n# Drzewo BST\n");
         bst.printBST();
@@ -549,12 +577,13 @@ void handleBST(){
         scanf("%d", &input);
         fflush(stdin);
 
-        switch (input)
-        {
+        switch (input) {
             case 0:
                 bst.destroy();
                 return;
+
             case 1:
+                // dodanie elementu
                 printf("%s", "\nPodaj wartosc: ");
                 scanf("%d", &value);
                 fflush(stdin);
@@ -567,21 +596,10 @@ void handleBST(){
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
+
             case 2:
+                // wyszukiwanie elementu
                 printf("%s", "\nPodaj wartosc: ");
-                scanf("%d", &value);
-                fflush(stdin);
-
-                start = read_QPC();
-                bst.remove(value);
-                elapsed = read_QPC() - start;
-
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
-                system("pause");
-                break;
-            case 3:
-                printf("%s", "\nPodaj liczbę: ");
                 scanf("%d", &value);
                 fflush(stdin);
 
@@ -589,10 +607,9 @@ void handleBST(){
                 index = bst.search(value);
                 elapsed = read_QPC() - start;
 
-                if(index==-1){
+                if (index == -1) {
                     printf("%s\n", "\nNie odnaleziono.");
-                }
-                else{
+                } else {
                     printf("%s\n", "\nOdnaleziono.");
                 }
 
@@ -600,7 +617,9 @@ void handleBST(){
                 cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
-            case 4:
+
+            case 3:
+                // usuniecie elementu
                 printf("%s", "\nPodaj liczbę: ");
                 scanf("%d", &value);
                 fflush(stdin);
@@ -609,10 +628,9 @@ void handleBST(){
                 index = bst.remove(value);
                 elapsed = read_QPC() - start;
 
-                if(index==-1){
+                if (index == -1) {
                     printf("%s\n", "\nNie usunięto.");
-                }
-                else{
+                } else {
                     printf("%s\n", "\nUsunięto.");
                 }
 

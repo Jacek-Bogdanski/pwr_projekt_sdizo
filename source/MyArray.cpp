@@ -3,24 +3,20 @@
 
 using namespace std;
 
-class MyArray
-{
+class MyArray {
 private:
     int length;
 
     int *array;
 
 public:
-    int getLength()
-    {
+    int getLength() {
         return this->length;
     }
 
-    void append(int n)
-    {
+    void append(int n) {
         int *tmp = new int[this->length + 1];
-        for (int i = 0; i < this->length; i++)
-        {
+        for (int i = 0; i < this->length; i++) {
             tmp[i] = this->array[i];
         }
         tmp[this->length] = n;
@@ -30,11 +26,9 @@ public:
         this->array = tmp;
     }
 
-    void prepend(int n)
-    {
+    void prepend(int n) {
         int *tmp = new int[this->length + 1];
-        for (int i = 0; i < this->length; i++)
-        {
+        for (int i = 0; i < this->length; i++) {
             tmp[i + 1] = this->array[i];
         }
         tmp[0] = n;
@@ -43,30 +37,23 @@ public:
         this->array = tmp;
     }
 
-    void put(int n, int index)
-    {
-        if (index >= this->length)
-        {
+    void put(int n, int index) {
+        if (index >= this->length) {
             this->append(n);
             return;
         }
-        if (index <= 0)
-        {
+        if (index <= 0) {
             this->prepend(n);
             return;
         }
         // indeks zawiera  się w tablicy
         int *tmp = new int[this->length + 1];
         int offset = 0;
-        for (int i = 0; i <= this->length; i++)
-        {
-            if (i == index)
-            {
+        for (int i = 0; i <= this->length; i++) {
+            if (i == index) {
                 offset = 1;
                 tmp[i] = n;
-            }
-            else
-            {
+            } else {
                 tmp[i + offset] = this->array[i];
             }
         }
@@ -80,14 +67,12 @@ public:
      *
      * @param n
      */
-    void pop()
-    {
-        if(this->length==0){
+    void pop() {
+        if (this->length == 0) {
             return;
         }
         int *tmp = new int[this->length - 1];
-        for (int i = 0; i < this->length - 1; i++)
-        {
+        for (int i = 0; i < this->length - 1; i++) {
             tmp[i] = this->array[i];
         }
         this->length--;
@@ -100,14 +85,12 @@ public:
      *
      * @param n
      */
-    void shift()
-    {
-        if(this->length==0){
+    void shift() {
+        if (this->length == 0) {
             return;
         }
         int *tmp = new int[this->length - 1];
-        for (int i = 0; i < this->length - 1; i++)
-        {
+        for (int i = 0; i < this->length - 1; i++) {
             tmp[i] = this->array[i + 1];
         }
         this->length--;
@@ -119,18 +102,15 @@ public:
      * Funkcja usuwajaca element z podanego indeksu
      * @param index
      */
-    void remove(int index)
-    {
-        if(this->length==0){
+    void remove(int index) {
+        if (this->length == 0) {
             return;
         }
-        if (index >= this->length)
-        {
+        if (index >= this->length) {
             this->pop();
             return;
         }
-        if (index == 0)
-        {
+        if (index == 0) {
             this->shift();
             return;
         }
@@ -138,14 +118,10 @@ public:
         // indeks zawiera się w tablicy
         int *tmp = new int[this->length - 1];
         int offset = 0;
-        for (int i = 0; i < this->length; i++)
-        {
-            if (i == index)
-            {
+        for (int i = 0; i < this->length; i++) {
+            if (i == index) {
                 offset = -1;
-            }
-            else
-            {
+            } else {
                 tmp[i + offset] = this->array[i];
             }
         }
@@ -154,39 +130,34 @@ public:
         this->array = tmp;
     }
 
-    int search(int n){
-        for(int i=0;i<this->length;i++){
-            if(this->array[i] == n){
+    int search(int n) {
+        for (int i = 0; i < this->length; i++) {
+            if (this->array[i] == n) {
                 return i;
             }
         }
         return -1;
     }
 
-    void destroy()
-    {
+    void destroy() {
         delete this->array;
         this->array = nullptr;
     }
 
-    void restart()
-    {
+    void restart() {
         delete this->array;
         this->length = 0;
         this->array = nullptr;
     }
 
-    string toString()
-    {
+    string toString() {
         string output = "[ ";
-        for (int i = 0; i < this->length; i++)
-        {
+        for (int i = 0; i < this->length; i++) {
             output.append(to_string(this->array[i]));
             output.append(", ");
         }
 
-        if (this->length > 0)
-        {
+        if (this->length > 0) {
             output.pop_back();
         }
         output.pop_back();
@@ -195,20 +166,20 @@ public:
         return output;
     }
 
-    MyArray(){
+    MyArray() {
         this->length = 0;
         this->array = nullptr;
     };
 
-    MyArray(int *data, int length){
-        if(length==0){
+    MyArray(int *data, int length) {
+        if (length == 0) {
             this->length = 0;
             this->array = nullptr;
         }
 
         this->length = length;
         this->array = new int[length];
-        for(int i=0;i<length;i++){
+        for (int i = 0; i < length; i++) {
             this->array[i] = data[i];
         }
     };

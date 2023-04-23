@@ -73,23 +73,23 @@ public:
                     delete node;
                     this->root = nullptr;
                 }
-                // ma oboje dzieci
+                    // ma oboje dzieci
                 else if (node->leftChild != nullptr && node->rightChild != nullptr) {
                     Node *next = node->rightChild;
-                    while(next->leftChild != nullptr){
+                    while (next->leftChild != nullptr) {
                         next = next->leftChild;
                     }
                     node->number = next->number;
-                    this->remove(next->number,next);
+                    this->remove(next->number, next);
                 }
-                // ma tylko lewe dziecko
+                    // ma tylko lewe dziecko
                 else if (node->leftChild != nullptr && node->rightChild == nullptr) {
                     Node *tmp = node->leftChild;
                     delete node;
                     tmp->parent = nullptr;
                     this->root = tmp;
                 }
-                // ma tylko prawe dziecko
+                    // ma tylko prawe dziecko
                 else {
                     Node *tmp = node->rightChild;
                     delete node;
@@ -97,7 +97,7 @@ public:
                     this->root = tmp;
                 }
             }
-            // nie korzen
+                // nie korzen
             else {
                 // nie ma dzieci
                 if (node->leftChild == nullptr && node->rightChild == nullptr) {
@@ -105,34 +105,34 @@ public:
                     if (node->parent->leftChild != nullptr && node->parent->leftChild->number == node->number) {
                         node->parent->leftChild = nullptr;
                     }
-                    // usuwany jest prawym dzieckiem
+                        // usuwany jest prawym dzieckiem
                     else {
                         node->parent->rightChild = nullptr;
                     }
                     delete node;
                 }
-                // ma oboje dzieci
+                    // ma oboje dzieci
                 else if (node->leftChild != nullptr && node->rightChild != nullptr) {
                     Node *next = node->rightChild;
-                    while(next->leftChild != nullptr){
+                    while (next->leftChild != nullptr) {
                         next = next->leftChild;
                     }
                     node->number = next->number;
-                    this->remove(next->number,next);
+                    this->remove(next->number, next);
                 }
-                // ma tylko lewe dziecko
+                    // ma tylko lewe dziecko
                 else if (node->leftChild != nullptr && node->rightChild == nullptr) {
                     // usuwany jest lewym dzieckiem
                     if (node->parent->leftChild != nullptr && node->parent->leftChild->number == node->number) {
                         node->parent->leftChild = node->leftChild;
                     }
-                    // usuwany jest prawym dzieckiem
+                        // usuwany jest prawym dzieckiem
                     else {
                         node->parent->rightChild = node->leftChild;
                     }
                     delete node;
                 }
-                // ma tylko prawe dziecko
+                    // ma tylko prawe dziecko
                 else {
                     // usuwany jest lewym dzieckiem
                     if (node->parent->leftChild != nullptr && node->parent->leftChild->number == node->number) {
