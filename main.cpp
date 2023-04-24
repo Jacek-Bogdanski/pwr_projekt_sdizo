@@ -28,6 +28,8 @@ int *test_data = nullptr;
 int test_data_size = 0;
 int val = 0;
 
+bool printStructures = true;
+
 /**
  * Sprawdzenie, czy plik istnieje
  */
@@ -235,7 +237,8 @@ void handleArray() {
     while (true) {
         system("cls");
         printf("%s", "\n# Tablica\n\n");
-        printf("%s\n\n", array.toString().c_str());
+        if(printStructures)
+            printf("%s\n\n", array.toString().c_str());
         // pokazanie menu tablicy
         printf("%s", menu_array);
 
@@ -257,8 +260,8 @@ void handleArray() {
                 array.prepend(value);
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -272,8 +275,8 @@ void handleArray() {
                 array.append(value);
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -288,8 +291,8 @@ void handleArray() {
                 array.put(value, index);
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -299,8 +302,8 @@ void handleArray() {
                 array.shift();
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -310,8 +313,8 @@ void handleArray() {
                 array.pop();
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -325,8 +328,8 @@ void handleArray() {
                 array.remove(index);
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -346,8 +349,8 @@ void handleArray() {
                     printf("%s %d\n", "\nOdnaleziono pod indeksem:", index);
                 }
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
         }
@@ -365,7 +368,8 @@ void handleList() {
     while (true) {
         system("cls");
         printf("%s", "\n# Lista\n\n");
-        printf("%s\n", list.toString().c_str());
+        if(printStructures)
+            printf("%s\n", list.toString().c_str());
         // pokazanie menu listy
         printf("%s", menu_array);
 
@@ -387,8 +391,8 @@ void handleList() {
                 list.prepend(value);
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -402,8 +406,8 @@ void handleList() {
                 list.append(value);
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -418,8 +422,8 @@ void handleList() {
                 list.put(value, index);
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -429,8 +433,8 @@ void handleList() {
                 list.shift();
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -440,8 +444,8 @@ void handleList() {
                 list.pop();
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -455,8 +459,8 @@ void handleList() {
                 list.remove(index);
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -476,8 +480,8 @@ void handleList() {
                     printf("%s %d\n", "\nOdnaleziono pod indeksem:", index);
                 }
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
         }
@@ -495,7 +499,8 @@ void handleHeap() {
     while (true) {
         system("cls");
         printf("%s", "\n# Kopiec binarny\n");
-        heap.printHeap();
+        if(printStructures)
+            heap.printHeap();
 
         // pokazanie menu kopca
         printf("%s", menu_heap);
@@ -518,8 +523,8 @@ void handleHeap() {
                 heap.add(value);
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -529,8 +534,8 @@ void handleHeap() {
                 heap.removeRoot();
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -550,8 +555,8 @@ void handleHeap() {
                     printf("%s %d\n", "\nOdnaleziono pod indeksem:", index);
                 }
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
         }
@@ -569,7 +574,8 @@ void handleBST() {
     while (true) {
         system("cls");
         printf("%s", "\n# Drzewo BST\n");
-        bst.printBST();
+        if(printStructures)
+            bst.printBST();
 
         // pokazanie menu kopca
         printf("%s", menu_bst);
@@ -592,8 +598,8 @@ void handleBST() {
                 bst.add(value);
                 elapsed = read_QPC() - start;
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -613,8 +619,8 @@ void handleBST() {
                     printf("%s\n", "\nOdnaleziono.");
                 }
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
 
@@ -634,8 +640,8 @@ void handleBST() {
                     printf("%s\n", "\nUsunięto.");
                 }
 
-                cout << "Time [ms] = " << setprecision(2) << (1000.0 * elapsed) / frequency << endl;
-                cout << "Time [us] = " << setprecision(2) << (1000000.0 * elapsed) / frequency << endl << endl;
+                cout << "Time [ms] = " << fixed << showpoint<< setprecision(3) << (1000.0 * elapsed) / frequency << endl;
+                cout << "Time [us] = " << fixed << showpoint<< setprecision(3) << (1000000.0 * elapsed) / frequency << endl << endl;
                 system("pause");
                 break;
         }
